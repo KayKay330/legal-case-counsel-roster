@@ -2,7 +2,7 @@
 
 import logging
 import logging.handlers
-from application_name.settings import Settings
+from legal_case_app.settings import Settings
 import os
 
 class LoggingService():

@@ -1,0 +1,24 @@
+
+{
+	"meta":{
+		"version": "v1",
+		"app_name": "Legal Case Counsel ROster",
+		"log_prefix": "legal_case_app"
+	},
+	"database":{
+		"pool":{
+			"name": "legal_case_db_bool",
+			"size": 10,
+			"reset_session": true,
+			"use_pure": true
+		},
+		"connection":{
+			"config":{
+				"database": "legal_case_counsel_db",
+				"user": "app_user",
+				"host": "localhost",
+				"port": 3306
+			}
+		}
+	}
+}
