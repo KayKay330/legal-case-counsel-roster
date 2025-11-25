@@ -20,20 +20,23 @@ class MySQLPersistenceWrapper(ApplicationBase):
 
 		# Database Configuration Constants
 		self.DB_CONFIG = {}
-		self.DB_CONFIG['database'] = \
-			self.DATABASE["connection"]["config"]["database"]
-		self.DB_CONFIG['user'] = self.DATABASE["connection"]["config"]["user"]
-		self.DB_CONFIG['host'] = self.DATABASE["connection"]["config"]["host"]
-		self.DB_CONFIG['port'] = self.DATABASE["connection"]["config"]["port"]
+		self.DB_CONFIG['database'] = self.DATABASE["connection"]["config"]["database"]
+		self.DB_CONFIG['user']     = self.DATABASE["connection"]["config"]["user"]
+		self.DB_CONFIG['password'] = self.DATABASE["connection"]["config"]["password"]
+		self.DB_CONFIG['host']     = self.DATABASE["connection"]["config"]["host"]
+		self.DB_CONFIG['port']     = self.DATABASE["connection"]["config"]["port"]
+
 
 		self._logger.log_debug(f'{inspect.currentframe().f_code.co_name}: DB Connection Config Dict: {self.DB_CONFIG}')
 
 		# Database Connection
-		#self._connection_pool = \
-			#self._initialize_database_connection_pool(self.DB_CONFIG)
+		self._connection_pool = \
+			self._initialize_database_connection_pool(self.DB_CONFIG)
 		
 
 		# SQL String Constants
+		self.SELECT_ALL_EMPLOYEES = \
+		  f'SELECT id, first_name, middle_name, last_name'
 
 
 
@@ -65,3 +68,15 @@ class MySQLPersistenceWrapper(ApplicationBase):
 		except Exception as e:
 			self._logger.log_error(f'{inspect.currentframe().f_code.co_name}:Problem creating connection pool: {e}')
 			self._logger.log_error(f'{inspect.currentframe().f_code.co_name}:Check DB conf:\n{json.dumps(self.DATABASE)}')
+
+
+
+def test_connection(self):
+    query = "SELECT first_name, last_name FROM lawyer LIMIT 3;"
+    cnx = self._connection_pool.get_connection()
+    cursor = cnx.cursor()
+    cursor.execute(query)
+    results = cursor.fetchall()
+    cursor.close()
+    cnx.close()
+    return results
