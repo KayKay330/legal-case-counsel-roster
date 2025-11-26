@@ -22,3 +22,7 @@ class UserInterface(ApplicationBase):
     def start(self):
         """Start main user interface."""
         self._logger.log_debug(f'{inspect.currentframe().f_code.co_name}: User interface started!')
+
+        print("LAWYERS: ", self.DB.get_all_lawyers())
+        print("CASES: ", self.DB.get_all_cases())
+        print("RELATIONSHIPS: ", self.DB.get_case_lawyers())
