@@ -86,8 +86,6 @@ class AppServices(ApplicationBase):
             lc.client_name,
             lc.case_status,
             lc.start_date,
-            lc.end_date,
-            lc.description,
             l.lawyer_id,
             l.first_name,
             l.last_name,
@@ -102,6 +100,7 @@ class AppServices(ApplicationBase):
         WHERE lc.case_id = %s;
         """
         return self.fetch_all(query, (case_id,))
+
 
     def add_lawyer(self, first_name, last_name, specialization, email, phone=None):
         """

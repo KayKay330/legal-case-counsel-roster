@@ -103,49 +103,67 @@ class UserInterface(ApplicationBase):
     # ---------- View case + lawyers ----------
 
     def _handle_view_case_with_lawyers(self):
-        """Ask for a case_id and show case details + assigned lawyers."""
-        self._handle_list_cases()
-        case_id_raw = input("\nEnter the case_id to view (or press Enter to cancel): ").strip()
-        if not case_id_raw:
+        """Prompt for a case and display it plus assigned lawyers."""
+        # 1. Get all cases so user can see choices
+        cases = self.DB.get_all_cases()
+
+        if not cases:
+            print("\nNo cases found.")
+            return
+
+        print("\n--- Cases ---")
+        for c in cases:
+            print(f"[{c['case_id']}] {c['case_name']} "
+                  f"(Client: {c['client_name']}, Status: {c['case_status']})")
+
+        # 2. Ask user which case_id to view
+        case_id_input = input(
+            "\nEnter the case_id to view (or press Enter to cancel): "
+        ).strip()
+
+        if not case_id_input:
             print("Cancelled.")
             return
 
         try:
-            case_id = int(case_id_raw)
+            case_id = int(case_id_input)
         except ValueError:
-            print("[!] Please enter a valid numeric case_id.")
+            print("Invalid case_id.")
             return
 
+        # 3. Pull the joined case + lawyers result from the service layer
         rows = self.DB.get_case_with_lawyers(case_id)
         if not rows:
-            print(f"\nNo case found with case_id = {case_id}.")
+            print(f"\nNo case found with id {case_id}.")
             return
 
-        # All rows contain the same case info; lawyers differ per row
+        # First row has the case information
         case = rows[0]
+
         print("\n--- Case Details ---")
         print(f"ID: {case['case_id']}")
         print(f"Name: {case['case_name']}")
         print(f"Client: {case['client_name']}")
         print(f"Status: {case['case_status']}")
         print(f"Start date: {case['start_date']}")
-        print(f"End date: {case['end_date']}")
-        print(f"Description: {case['description']}")
 
-        print("\nAssigned Lawyers:")
-        any_lawyers = False
+        # 4. Show all assigned lawyers for this case
+        print("\n--- Assigned Lawyers ---")
+        has_any = False
         for row in rows:
-            if row["lawyer_id"] is None:
+            # If there are no lawyers yet, LEFT JOIN will give lawyer_id = None
+            if row['lawyer_id'] is None:
                 continue
-            any_lawyers = True
+            has_any = True
             print(
-                f"- [{row['lawyer_id']}] {row['first_name']} {row['last_name']} "
+                f"- {row['first_name']} {row['last_name']} "
                 f"({row['specialization']}) "
-                f"Role: {row['role']}, Hours: {row['billable_hours']}"
+                f"[Role: {row['role']}, Hours: {row['billable_hours']}]"
             )
 
-        if not any_lawyers:
-            print("  (No lawyers assigned yet.)")
+        if not has_any:
+            print("No lawyers assigned yet.")
+
 
     # ---------- Add lawyer ----------
 
