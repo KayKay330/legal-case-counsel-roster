@@ -86,37 +86,22 @@ class UserInterface(ApplicationBase):
             )
 
     def _handle_list_cases(self):
-        """List all cases in a friendly format."""
+        """Helper to print all cases (used by option 2 and 3)."""
         cases = self.DB.get_all_cases()
-        if not cases:
-            print("\n(No cases found.)")
-            return
-
-        print("\n--- Cases ---")
-        for row in cases:
-            print(
-                f"[{row['case_id']}] "
-                f"{row['case_name']} "
-                f"(Client: {row['client_name']}, Status: {row['case_status']})"
-            )
-
-    # ---------- View case + lawyers ----------
-
-    def _handle_view_case_with_lawyers(self):
-        """Prompt for a case and display it plus assigned lawyers."""
-        # 1. Get all cases so user can see choices
-        cases = self.DB.get_all_cases()
-
-        if not cases:
-            print("\nNo cases found.")
-            return
-
         print("\n--- Cases ---")
         for c in cases:
-            print(f"[{c['case_id']}] {c['case_name']} "
-                  f"(Client: {c['client_name']}, Status: {c['case_status']})")
+            print(
+                f"[{c['case_id']}] {c['case_name']} "
+                f"(Client: {c['client_name']}, Status: {c['case_status']})"
+            )
+        return cases
 
-        # 2. Ask user which case_id to view
+    def _handle_view_case_with_lawyers(self):
+        """Allow the user to pick a case and see all its assigned lawyers."""
+        # 1. Show cases
+        cases = self._handle_list_cases()
+
+        # 2. Ask which case to view
         case_id_input = input(
             "\nEnter the case_id to view (or press Enter to cancel): "
         ).strip()
@@ -128,41 +113,33 @@ class UserInterface(ApplicationBase):
         try:
             case_id = int(case_id_input)
         except ValueError:
-            print("Invalid case_id.")
+            print("Invalid case_id. Please enter a number.")
             return
 
-        # 3. Pull the joined case + lawyers result from the service layer
+        # 3. Retrieve case + lawyers from service layer
         rows = self.DB.get_case_with_lawyers(case_id)
+
         if not rows:
-            print(f"\nNo case found with id {case_id}.")
+            print(f"No case found with case_id = {case_id}, or no lawyers assigned.")
             return
 
-        # First row has the case information
+        # 4. Print case details (use the first row for case-level info)
         case = rows[0]
-
         print("\n--- Case Details ---")
-        print(f"ID: {case['case_id']}")
-        print(f"Name: {case['case_name']}")
+        print(f"Case ID: {case['case_id']}")
+        print(f"Case Name: {case['case_name']}")
         print(f"Client: {case['client_name']}")
         print(f"Status: {case['case_status']}")
-        print(f"Start date: {case['start_date']}")
+        print("\nAssigned Lawyers:")
 
-        # 4. Show all assigned lawyers for this case
-        print("\n--- Assigned Lawyers ---")
-        has_any = False
         for row in rows:
-            # If there are no lawyers yet, LEFT JOIN will give lawyer_id = None
-            if row['lawyer_id'] is None:
-                continue
-            has_any = True
             print(
-                f"- {row['first_name']} {row['last_name']} "
+                f" - {row['first_name']} {row['last_name']} "
                 f"({row['specialization']}) "
-                f"[Role: {row['role']}, Hours: {row['billable_hours']}]"
+                f"| Role: {row['role']} "
+                f"| Billable Hours: {row['billable_hours']}"
             )
 
-        if not has_any:
-            print("No lawyers assigned yet.")
 
 
     # ---------- Add lawyer ----------
