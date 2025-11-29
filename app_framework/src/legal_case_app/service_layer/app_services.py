@@ -10,12 +10,14 @@ class AppServices(ApplicationBase):
     """AppServices Class Definition."""
 
     def __init__(self, config: dict) -> None:
+        """Initialize AppServices and wire it to the DB wrapper."""
         self._config_dict = config
         self.META = config["meta"]
 
+        # Set up logging via ApplicationBase
         super().__init__(
             subclass_name=self.__class__.__name__,
-            logfile_prefix_name=self.META["log_prefix"]
+            logfile_prefix_name=self.META["log_prefix"],
         )
 
         # Create the DB wrapper (this sets up the connection pool)
@@ -30,7 +32,12 @@ class AppServices(ApplicationBase):
     # ---------- Low-level helpers ----------
 
     def fetch_all(self, query: str, params=None):
-        """Run a SELECT and return all rows as dictionaries."""
+        """
+        Run a SELECT and return all rows as dictionaries.
+
+        :param query: SQL SELECT statement
+        :param params: tuple of parameters or None
+        """
         connection = self._connection_pool.get_connection()
         cursor = connection.cursor(dictionary=True)
         try:
@@ -45,7 +52,12 @@ class AppServices(ApplicationBase):
             connection.close()
 
     def execute(self, query: str, params=None):
-        """Run an INSERT/UPDATE/DELETE."""
+        """
+        Run an INSERT/UPDATE/DELETE.
+
+        :param query: SQL statement
+        :param params: tuple of parameters or None
+        """
         connection = self._connection_pool.get_connection()
         cursor = connection.cursor()
         try:
@@ -61,14 +73,17 @@ class AppServices(ApplicationBase):
     # ---------- Existing list methods ----------
 
     def get_all_lawyers(self):
+        """Return all lawyers."""
         query = "SELECT * FROM lawyer;"
         return self.fetch_all(query)
 
     def get_all_cases(self):
+        """Return all cases."""
         query = "SELECT * FROM legal_case;"
         return self.fetch_all(query)
 
     def get_case_lawyers(self):
+        """Return all rows from the case_lawyer_xref table."""
         query = "SELECT * FROM case_lawyer_xref;"
         return self.fetch_all(query)
 
@@ -77,7 +92,9 @@ class AppServices(ApplicationBase):
     def get_case_with_lawyers(self, case_id: int):
         """
         Return a joined view of one case and its assigned lawyers.
-        If there are no lawyers yet, we still return the case row.
+
+        If there are no lawyers yet, we still return the case details
+        (because of the LEFT JOIN).
         """
         query = """
         SELECT
@@ -101,7 +118,6 @@ class AppServices(ApplicationBase):
         """
         return self.fetch_all(query, (case_id,))
 
-
     def add_lawyer(self, first_name, last_name, specialization, email, phone=None):
         """
         Insert a new lawyer. hire_date is set to today's date by MySQL.
@@ -112,19 +128,39 @@ class AppServices(ApplicationBase):
         """
         self.execute(query, (first_name, last_name, specialization, email, phone))
 
-    def add_case(self, case_name, client_name, case_status, start_date, description=None):
+    def add_case(
+        self,
+        case_name,
+        client_name,
+        case_status,
+        start_date,
+        end_date=None,
+        description=None,
+    ):
         """
         Insert a new legal case.
-        start_date should be 'YYYY-MM-DD'.
+
+        start_date and end_date should be 'YYYY-MM-DD'.
+        end_date is optional.
+        description is optional.
         """
         query = """
         INSERT INTO legal_case
-            (case_name, client_name, case_status, start_date, description)
-        VALUES (%s, %s, %s, %s, %s);
+            (case_name, client_name, case_status, start_date, end_date, description)
+        VALUES (%s, %s, %s, %s, %s, %s);
         """
-        self.execute(query, (case_name, client_name, case_status, start_date, description))
+        self.execute(
+            query,
+            (case_name, client_name, case_status, start_date, end_date, description),
+        )
 
-    def assign_lawyer_to_case(self, case_id: int, lawyer_id: int, role: str, billable_hours: float):
+    def assign_lawyer_to_case(
+        self,
+        case_id: int,
+        lawyer_id: int,
+        role: str,
+        billable_hours: float,
+    ):
         """
         Link a lawyer to a case with role + billable hours.
         """

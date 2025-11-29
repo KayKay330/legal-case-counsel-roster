@@ -16,20 +16,20 @@ class UserInterface(ApplicationBase):
 
         super().__init__(
             subclass_name=self.__class__.__name__,
-            logfile_prefix_name=self.META["log_prefix"]
+            logfile_prefix_name=self.META["log_prefix"],
         )
 
         # Service layer (talks to DB)
         self.DB = AppServices(config)
 
-        self._logger.log_debug(f'{inspect.currentframe().f_code.co_name}:It works!')
+        self._logger.log_debug(f"{inspect.currentframe().f_code.co_name}:It works!")
 
     # ---------- Main loop ----------
 
     def start(self):
         """Start main user interface."""
         self._logger.log_debug(
-            f'{inspect.currentframe().f_code.co_name}: User interface started!'
+            f"{inspect.currentframe().f_code.co_name}: User interface started!"
         )
 
         while True:
@@ -88,6 +88,10 @@ class UserInterface(ApplicationBase):
     def _handle_list_cases(self):
         """Helper to print all cases (used by option 2 and 3)."""
         cases = self.DB.get_all_cases()
+        if not cases:
+            print("\n(No cases found.)")
+            return []
+
         print("\n--- Cases ---")
         for c in cases:
             print(
@@ -100,6 +104,8 @@ class UserInterface(ApplicationBase):
         """Allow the user to pick a case and see all its assigned lawyers."""
         # 1. Show cases
         cases = self._handle_list_cases()
+        if not cases:
+            return
 
         # 2. Ask which case to view
         case_id_input = input(
@@ -120,7 +126,7 @@ class UserInterface(ApplicationBase):
         rows = self.DB.get_case_with_lawyers(case_id)
 
         if not rows:
-            print(f"No case found with case_id = {case_id}, or no lawyers assigned.")
+            print(f"No case found with case_id = {case_id}.")
             return
 
         # 4. Print case details (use the first row for case-level info)
@@ -130,9 +136,14 @@ class UserInterface(ApplicationBase):
         print(f"Case Name: {case['case_name']}")
         print(f"Client: {case['client_name']}")
         print(f"Status: {case['case_status']}")
-        print("\nAssigned Lawyers:")
 
+        print("\nAssigned Lawyers:")
+        has_lawyer = False
         for row in rows:
+            # If no lawyer yet, the LEFT JOIN will give None values
+            if row["lawyer_id"] is None:
+                continue
+            has_lawyer = True
             print(
                 f" - {row['first_name']} {row['last_name']} "
                 f"({row['specialization']}) "
@@ -140,7 +151,8 @@ class UserInterface(ApplicationBase):
                 f"| Billable Hours: {row['billable_hours']}"
             )
 
-
+        if not has_lawyer:
+            print(" (No lawyers assigned yet.)")
 
     # ---------- Add lawyer ----------
 
@@ -174,16 +186,31 @@ class UserInterface(ApplicationBase):
         client_name = input("Client name: ").strip()
         case_status = input("Status (e.g., Open, Pending, In Progress): ").strip()
         start_date = input("Start date (YYYY-MM-DD): ").strip()
+
+        # ✅ new: end_date prompt
+        end_date = input(
+            "End date (YYYY-MM-DD, optional, press Enter to skip): "
+        ).strip()
+        if end_date == "":
+            end_date = None
+
         description = input("Description (optional): ").strip()
+        if description == "":
+            description = None
 
         if not case_name or not client_name or not case_status or not start_date:
             print("[!] Case name, client name, status, and start date are required.")
             return
 
-        desc_value = description if description else None
-
         try:
-            self.DB.add_case(case_name, client_name, case_status, start_date, desc_value)
+            self.DB.add_case(
+                case_name,
+                client_name,
+                case_status,
+                start_date,
+                end_date,
+                description,
+            )
             print("\n[✓] Case added successfully.")
         except Exception as e:
             print(f"[!] Error adding case: {e}")
