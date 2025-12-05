@@ -1,0 +1,7 @@
+DEBUG:UserInterface:2025-11-07 20:55:19,290:__init__:It works!
+DEBUG:UserInterface:2025-11-07 20:55:19,295:start: User interface started!
+DEBUG:MySQLPersistenceWrapper:2025-11-07 21:20:52,351:__init__:It works!
+DEBUG:MySQLPersistenceWrapper:2025-11-07 21:20:52,351:__init__: DB Connection Config Dict: {'database': 'legal_case_roster_db', 'user': 'legal_case_user', 'host': 'localhost', 'port': 3306}
+DEBUG:AppServices:2025-11-07 21:20:52,352:__init__:It works!
+DEBUG:UserInterface:2025-11-07 21:20:52,352:__init__:It works!
+DEBUG:UserInterface:2025-11-07 21:20:52,353:start: User interface started!
