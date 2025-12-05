@@ -19,7 +19,7 @@ class UserInterface(ApplicationBase):
             logfile_prefix_name=self.META["log_prefix"],
         )
 
-        # Service layer (talks to DB)
+        # Service layer (talks to my Database)
         self.DB = AppServices(config)
 
         self._logger.log_debug(f"{inspect.currentframe().f_code.co_name}:It works!")

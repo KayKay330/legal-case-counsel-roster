@@ -1,0 +1,5 @@
+DEBUG:MySQLPersistenceWrapper:2025-11-05 18:44:19,259:__init__:It works!
+DEBUG:MySQLPersistenceWrapper:2025-11-05 18:44:19,259:__init__: DB Connection Config Dict: {'database': 'legal_case_counsel_db', 'user': 'app_user', 'host': 'localhost', 'port': 3306}
+DEBUG:AppServices:2025-11-05 18:44:19,261:__init__:It works!
+DEBUG:UserInterface:2025-11-05 18:44:19,261:__init__:It works!
+DEBUG:UserInterface:2025-11-05 18:44:19,262:start: User interface started!

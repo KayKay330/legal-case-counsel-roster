@@ -1,0 +1,9 @@
+DEBUG:UserInterface:2025-12-03 19:00:51,487:__init__:It works!
+DEBUG:UserInterface:2025-12-03 19:00:51,489:start: User interface started!
+DEBUG:MySQLPersistenceWrapper:2025-12-04 20:23:45,510:__init__:It works!
+DEBUG:MySQLPersistenceWrapper:2025-12-04 20:23:45,511:__init__: DB Connection Config Dict: {'database': 'legal_case_roster_db', 'user': 'legal_case_user', 'password': 'SecurePass123!', 'host': 'localhost', 'port': 3306}
+DEBUG:MySQLPersistenceWrapper:2025-12-04 20:23:45,511:Creating connection pool...
+DEBUG:MySQLPersistenceWrapper:2025-12-04 20:23:46,391:_initialize_database_connection_pool: Connection pool successfully created!
+DEBUG:AppServices:2025-12-04 20:23:46,393:__init__: AppServices initialized. DB Config: {'database': 'legal_case_roster_db', 'user': 'legal_case_user', 'password': 'SecurePass123!', 'host': 'localhost', 'port': 3306}
+DEBUG:UserInterface:2025-12-04 20:23:46,394:__init__:It works!
+DEBUG:UserInterface:2025-12-04 20:23:46,394:start: User interface started!

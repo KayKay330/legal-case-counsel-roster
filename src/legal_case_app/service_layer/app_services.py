@@ -14,7 +14,7 @@ class AppServices(ApplicationBase):
         self._config_dict = config
         self.META = config["meta"]
 
-        # Set up logging via ApplicationBase
+        # Set up logging through ApplicationBase
         super().__init__(
             subclass_name=self.__class__.__name__,
             logfile_prefix_name=self.META["log_prefix"],

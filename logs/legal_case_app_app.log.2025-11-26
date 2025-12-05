@@ -1,0 +1,43 @@
+DEBUG:UserInterface:2025-11-26 17:08:24,656:__init__:It works!
+DEBUG:UserInterface:2025-11-26 17:08:24,658:start: User interface started!
+DEBUG:MySQLPersistenceWrapper:2025-11-26 17:40:02,197:__init__:It works!
+DEBUG:MySQLPersistenceWrapper:2025-11-26 17:40:02,198:__init__: DB Connection Config Dict: {'database': 'legal_case_roster_db', 'user': 'legal_case_user', 'password': 'SecurePass123!', 'host': 'localhost', 'port': 3306}
+DEBUG:MySQLPersistenceWrapper:2025-11-26 17:40:02,199:Creating connection pool...
+DEBUG:MySQLPersistenceWrapper:2025-11-26 17:40:03,040:_initialize_database_connection_pool: Connection pool successfully created!
+DEBUG:AppServices:2025-11-26 17:40:03,042:__init__: AppServices initialized. DB Config: {'database': 'legal_case_roster_db', 'user': 'legal_case_user', 'password': 'SecurePass123!', 'host': 'localhost', 'port': 3306}
+DEBUG:UserInterface:2025-11-26 17:40:03,042:__init__:It works!
+DEBUG:UserInterface:2025-11-26 17:40:03,043:start: User interface started!
+DEBUG:MySQLPersistenceWrapper:2025-11-26 18:30:38,292:__init__:It works!
+DEBUG:MySQLPersistenceWrapper:2025-11-26 18:30:38,294:__init__: DB Connection Config Dict: {'database': 'legal_case_roster_db', 'user': 'legal_case_user', 'password': 'SecurePass123!', 'host': 'localhost', 'port': 3306}
+DEBUG:MySQLPersistenceWrapper:2025-11-26 18:30:38,294:Creating connection pool...
+DEBUG:MySQLPersistenceWrapper:2025-11-26 18:30:39,114:_initialize_database_connection_pool: Connection pool successfully created!
+DEBUG:AppServices:2025-11-26 18:30:39,115:__init__: AppServices initialized. DB Config: {'database': 'legal_case_roster_db', 'user': 'legal_case_user', 'password': 'SecurePass123!', 'host': 'localhost', 'port': 3306}
+DEBUG:UserInterface:2025-11-26 18:30:39,115:__init__:It works!
+DEBUG:UserInterface:2025-11-26 18:30:39,115:start: User interface started!
+DEBUG:MySQLPersistenceWrapper:2025-11-26 23:11:15,463:__init__:It works!
+DEBUG:MySQLPersistenceWrapper:2025-11-26 23:11:15,465:__init__: DB Connection Config Dict: {'database': 'legal_case_roster_db', 'user': 'legal_case_user', 'password': 'SecurePass123!', 'host': 'localhost', 'port': 3306}
+DEBUG:MySQLPersistenceWrapper:2025-11-26 23:11:15,466:Creating connection pool...
+ERROR:MySQLPersistenceWrapper:2025-11-26 23:11:15,662:_initialize_database_connection_pool: Problem creating connection pool: 1045 (28000): Access denied for user 'legal_case_user'@'localhost' (using password: YES)
+ERROR:MySQLPersistenceWrapper:2025-11-26 23:11:15,663:_initialize_database_connection_pool: Check DB cnfg:
+{"pool": {"name": "legal_case_app_db_pool", "size": 10, "reset_session": true, "use_pure": true}, "connection": {"config": {"database": "legal_case_roster_db", "user": "legal_case_user", "password": "SecurePass123!", "host": "localhost", "port": 3306}}}
+DEBUG:AppServices:2025-11-26 23:11:15,664:__init__: AppServices initialized. DB Config: {'database': 'legal_case_roster_db', 'user': 'legal_case_user', 'password': 'SecurePass123!', 'host': 'localhost', 'port': 3306}
+DEBUG:UserInterface:2025-11-26 23:11:15,665:__init__:It works!
+DEBUG:UserInterface:2025-11-26 23:11:15,665:start: User interface started!
+DEBUG:MySQLPersistenceWrapper:2025-11-26 23:14:09,096:__init__:It works!
+DEBUG:MySQLPersistenceWrapper:2025-11-26 23:14:09,097:__init__: DB Connection Config Dict: {'database': 'legal_case_roster_db', 'user': 'legal_case_user', 'password': 'SecurePass123!', 'host': 'localhost', 'port': 3306}
+DEBUG:MySQLPersistenceWrapper:2025-11-26 23:14:09,097:Creating connection pool...
+ERROR:MySQLPersistenceWrapper:2025-11-26 23:14:09,256:_initialize_database_connection_pool: Problem creating connection pool: 1045 (28000): Access denied for user 'legal_case_user'@'localhost' (using password: YES)
+ERROR:MySQLPersistenceWrapper:2025-11-26 23:14:09,257:_initialize_database_connection_pool: Check DB cnfg:
+{"pool": {"name": "legal_case_app_db_pool", "size": 10, "reset_session": true, "use_pure": true}, "connection": {"config": {"database": "legal_case_roster_db", "user": "legal_case_user", "password": "SecurePass123!", "host": "localhost", "port": 3306}}}
+DEBUG:AppServices:2025-11-26 23:14:09,258:__init__: AppServices initialized. DB Config: {'database': 'legal_case_roster_db', 'user': 'legal_case_user', 'password': 'SecurePass123!', 'host': 'localhost', 'port': 3306}
+DEBUG:UserInterface:2025-11-26 23:14:09,258:__init__:It works!
+DEBUG:UserInterface:2025-11-26 23:14:09,259:start: User interface started!
+DEBUG:MySQLPersistenceWrapper:2025-11-26 23:53:16,490:__init__:It works!
+DEBUG:MySQLPersistenceWrapper:2025-11-26 23:53:16,491:__init__: DB Connection Config Dict: {'database': 'legal_case_roster_db', 'user': 'legal_case_user', 'password': 'SecurePass123!', 'host': 'localhost', 'port': 3306}
+DEBUG:MySQLPersistenceWrapper:2025-11-26 23:53:16,491:Creating connection pool...
+ERROR:MySQLPersistenceWrapper:2025-11-26 23:53:16,634:_initialize_database_connection_pool: Problem creating connection pool: 1045 (28000): Access denied for user 'legal_case_user'@'localhost' (using password: YES)
+ERROR:MySQLPersistenceWrapper:2025-11-26 23:53:16,635:_initialize_database_connection_pool: Check DB cnfg:
+{"pool": {"name": "legal_case_app_db_pool", "size": 10, "reset_session": true, "use_pure": true}, "connection": {"config": {"database": "legal_case_roster_db", "user": "legal_case_user", "password": "SecurePass123!", "host": "localhost", "port": 3306}}}
+DEBUG:AppServices:2025-11-26 23:53:16,636:__init__: AppServices initialized. DB Config: {'database': 'legal_case_roster_db', 'user': 'legal_case_user', 'password': 'SecurePass123!', 'host': 'localhost', 'port': 3306}
+DEBUG:UserInterface:2025-11-26 23:53:16,636:__init__:It works!
+DEBUG:UserInterface:2025-11-26 23:53:16,637:start: User interface started!
