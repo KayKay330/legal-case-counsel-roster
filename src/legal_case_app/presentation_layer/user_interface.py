@@ -165,8 +165,14 @@ class UserInterface(ApplicationBase):
         email = input("Email: ").strip()
         phone = input("Phone (optional, press Enter to skip): ").strip()
 
-        if not first or not last or not spec or not email:
-            print("[!] First, last, specialization, and email are required.")
+        # Basic validation:names must contain letters 
+        if not first.isalpha() or not last.isalpha():
+            print("[!] First and last name must contain letters only.")
+            return
+        
+        # Basic validation: email must contain '@'
+        if "@" not in email:
+            print("[!] Email address must contain '@'.")
             return
 
         phone_value = phone if phone else None

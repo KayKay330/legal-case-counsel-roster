@@ -22,6 +22,7 @@ class AppServices(ApplicationBase):
 
         # Create the DB wrapper (this sets up the connection pool)
         self.db = MySQLPersistenceWrapper(config)
+        self.DB = self.db
         self._connection_pool = self.db._connection_pool
 
         self._logger.log_debug(

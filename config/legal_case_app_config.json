@@ -16,9 +16,9 @@
       "config": {
         "database": "legal_case_roster_db",
         "user": "legal_case_user",
-        "password": "SecurePass123!",
+        "password": "Root2025!",
         "host": "localhost",
-        "port": 3306
+        "port": 8889
       }
     }
   }

@@ -1,8 +1,16 @@
 {
-	"logs_dir": "logs",
-	"log_filename": "app.log",
-	"log_level": "debug",
-	"log_to_console": true,
-	"log_to_file": true,
-	"deployed_to_production": false
+    "logs_dir": "logs",
+    "log_filename": "app.log",
+    "log_level": "debug",
+    "log_to_console": true,
+    "log_to_file": true,
+    "deployed_to_production": false,
+
+    "mysql_config": {
+        "database": "legal_case_roster_db",
+        "user": "legal_case_user",
+        "password": "Root2025!",
+        "host": "localhost",
+        "port": 3306
+    }
 }
